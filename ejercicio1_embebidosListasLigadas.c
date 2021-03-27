@@ -3,6 +3,7 @@
 
 #define TRUE 1
 #define BANDERA 1
+#define CABEZA 1 
 
 /*tipos de datos astractos*/
 typedef struct DirectorioTrabajador{
@@ -16,8 +17,10 @@ typedef struct NODO{
    struct NODO* ptr_siguienteNodo;
 }nodo; 
 /**/
-nodo *cabezaLista=NULL;
 nodo *colaLista=NULL;
+nodo *cabezaLista=NULL;
+unsigned char CantidadTrabajadores=0;  
+enum {EscribirDatos=1,VerLista,EliminarNodo,BorrarLista,SalirMenu};
 
 /*PROTOTIPO DE FUNCIONES*/
 nodo *CrearNodo();
@@ -26,7 +29,8 @@ void CrearTrabajador(nodo *nodo);
 void VaciarLista();
 void ImprimirLista();
 void ImprimirOpciones();
-enum {EscribirDatos=1,VerLista,BorrarLista,SalirMenu};
+void EliminarElemento(unsigned char posicion);
+unsigned char ElementoEliminar(); 
 
 /*INCIO DE LA FUNCION PRINCIPAL*/
 int main(void){
@@ -53,8 +57,13 @@ int main(void){
                             InsertarEnLista(); 
                             break;
             case VerLista: 
+                            printf("actualmente se encuentran %d trabajadores.\r\n",CantidadTrabajadores); 
                             ImprimirLista(); 
                             break; 
+
+            case EliminarNodo: 
+                              EliminarElemento(ElementoEliminar()); 
+                              break; 
             case BorrarLista: 
                             VaciarLista();
                             break; 
@@ -86,6 +95,7 @@ void CrearTrabajador(nodo* nodo){
     fflush(stdin);
      printf("ingrese la direccion del trabajaddor %s\r\n",nodo->DirectorioTrabajadores.nombreTrabajador);
       scanf("%s",nodo->DirectorioTrabajadores.direccionTrabajador);
+    CantidadTrabajadores++;  
     }
 //
 void InsertarEnLista(){
@@ -119,6 +129,7 @@ void VaciarLista(){
        }
        cabezaLista=NULL;
        colaLista=NULL;
+       CantidadTrabajadores=0; 
        printf("la lista se ha vaciado correctamente"); 
 }
 
@@ -137,12 +148,43 @@ void ImprimirLista(){
            RecorrerNodo->DirectorioTrabajadores.direccionTrabajador);
            RecorrerNodo=RecorrerNodo->ptr_siguienteNodo;
            }
+           
+}
+
+void EliminarElemento(unsigned char posicion){
+    unsigned char MoverPosicion=1; 
+    nodo *buscarElemento=cabezaLista; 
+    nodo *NodoAuxiliar=NULL;
+
+    for(MoverPosicion=1; MoverPosicion!=posicion && buscarElemento->ptr_siguienteNodo!=NULL;MoverPosicion++){
+          NodoAuxiliar=buscarElemento;
+          buscarElemento=buscarElemento->ptr_siguienteNodo;         
+        }
+     if(MoverPosicion!=posicion || buscarElemento==NULL){
+        printf("la posicion que desea buscar no se encuentra\\\
+                \r\nen la lista o la lista está vacia");
+               return;  
+        }
+      if(MoverPosicion==CABEZA) cabezaLista=buscarElemento->ptr_siguienteNodo; 
+         else NodoAuxiliar->ptr_siguienteNodo=buscarElemento->ptr_siguienteNodo; 
+            
+     free(buscarElemento);
+      CantidadTrabajadores--; 
 }
 
 void ImprimirOpciones(){
       printf("\n\nIngrese una opcion:\\\
       \n(1) para insertar datos en la lista.\\\
       \n(2) para ver los datos que hay en la lista.\\\
-      \n(3) para eliminar todos los elementos de la lista.\\\
-      \n(4)para final sesion en del menu\r\n");
+      \n(3)para eliminar un elemento de la lista.\\\
+      \n(4) para eliminar todos los elementos de la lista.\\\
+      \n(5)para final sesion en del menu\r\n");
+}
+
+
+unsigned char  ElementoEliminar(){
+  unsigned char numero=0;
+   printf("ingrese el numero del elemento que desea eliminar");
+   scanf("%hhd",&numero);
+   return(numero); 
 }
