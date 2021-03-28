@@ -31,6 +31,7 @@ void ImprimirOpciones();
 void EliminarElemento(unsigned char posicion);
 unsigned char ElementoEliminar(); 
 void GuardarListaEnArchivo();
+void BorrarListaEnArchivo(FILE *ptr_archivo);
 /*INCIO DE LA FUNCION PRINCIPAL*/
 int main(void){
      
@@ -60,7 +61,7 @@ int main(void){
                             printf("actualmente se encuentran %d trabajadores.\r\n",CantidadTrabajadores); 
                             ImprimirLista(); 
                             break; 
-
+            
             case EliminarNodo: 
                               EliminarElemento(ElementoEliminar()); 
                               break; 
@@ -74,7 +75,7 @@ int main(void){
 
      }//FIN DEL BUCLE INFINITO
    
-    return 0;
+    return 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 }//FIN DE LA FUNCION PRINCIPAL
 
 
@@ -82,73 +83,73 @@ int main(void){
 nodo* CrearNodo(){
   nodo *NuevoNodo=(nodo*)malloc(sizeof(nodo));
   if(NuevoNodo==NULL)printf("error!... insuficiente espacio en memoria\r\n");
-    return(NuevoNodo);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        return(NuevoNodo);
 }
 //
 void CrearTrabajador(nodo* nodo){
-    fflush(stdin);
-     printf("ingresa el nombre del trabajdor:\r\n");
-      scanf("%s",nodo->DirectorioTrabajadores.nombreTrabajador);
-    fflush(stdin); 
-     printf("ingrese el numero telefonico de %s\r\n",nodo->DirectorioTrabajadores.nombreTrabajador); 
-      scanf("%s",nodo->DirectorioTrabajadores.numeroTelefono);
-    fflush(stdin);
-     printf("ingrese la direccion del trabajaddor %s\r\n",nodo->DirectorioTrabajadores.nombreTrabajador);
-      scanf("%s",nodo->DirectorioTrabajadores.direccionTrabajador);
+      fflush(stdin);
+    printf("ingresa el nombre del trabajdor:\r\n");
+     scanf("%s",nodo->DirectorioTrabajadores.nombreTrabajador);
+      fflush(stdin); 
+    printf("ingrese el numero telefonico de %s\r\n",nodo->DirectorioTrabajadores.nombreTrabajador); 
+     scanf("%s",nodo->DirectorioTrabajadores.numeroTelefono);
+      fflush(stdin);
+    printf("ingrese la direccion del trabajaddor %s\r\n",nodo->DirectorioTrabajadores.nombreTrabajador);
+     scanf("%s",nodo->DirectorioTrabajadores.direccionTrabajador);
     CantidadTrabajadores++;  
     }
 //
 void InsertarEnLista(){
-  nodo *NuevoNodo=CrearNodo();
-   
+    nodo *NuevoNodo=CrearNodo();
+      
   if(cabezaLista==NULL && NuevoNodo!=NULL){
-        CrearTrabajador(NuevoNodo);
-       cabezaLista=NuevoNodo;
-       colaLista=NuevoNodo;
-      return; 
-      }
-    else if(NuevoNodo!=NULL){
-         CrearTrabajador(NuevoNodo);
-      colaLista->ptr_siguienteNodo=NuevoNodo;
-      colaLista=NuevoNodo;  
-        return; 
-    }  
+      CrearTrabajador(NuevoNodo);
+      cabezaLista=NuevoNodo;
+      colaLista=NuevoNodo;
+    return; 
+    }
+  else if(NuevoNodo!=NULL){
+          CrearTrabajador(NuevoNodo);
+            colaLista->ptr_siguienteNodo=NuevoNodo;
+            colaLista=NuevoNodo;  
+          return; 
+        }  
 }
 //
 void VaciarLista(){
-    if(cabezaLista==NULL){
-       printf("esta lista es una lista vacia,por favor primero ingrese valores en ella\r\n");
-        return; 
-      }
+    
+  if(cabezaLista==NULL){
+      printf("esta lista es una lista vacia,por favor primero ingrese valores en ella\r\n");
+      return; 
+    }
     nodo *eliminarNodo=cabezaLista; 
     nodo *auxiliar=NULL; 
   while(eliminarNodo!=NULL){
         auxiliar=eliminarNodo->ptr_siguienteNodo;
-        free(eliminarNodo); 
+      free(eliminarNodo); 
         eliminarNodo=auxiliar;     
-       }
-       cabezaLista=NULL;
-       colaLista=NULL;
-       CantidadTrabajadores=0; 
-       printf("la lista se ha vaciado correctamente"); 
+      }
+      cabezaLista=NULL;
+      colaLista=NULL;
+      CantidadTrabajadores=0; 
+  printf("la lista se ha vaciado correctamente\r\n\r\n"); 
 }
 
 //
 void ImprimirLista(){
-    if(cabezaLista==NULL){
-         printf("esta lista es una lista vacia, por favor primero ingrese valores en ella\r\n");
-         return;
-        }
-
-     nodo *RecorrerNodo=cabezaLista;
-    while(RecorrerNodo!=NULL){
-           printf("\n\nnombre: %s\n numero telefonico: %s\ndireccion: %s\r\n",
-           RecorrerNodo->DirectorioTrabajadores.nombreTrabajador,
-           RecorrerNodo->DirectorioTrabajadores.numeroTelefono,
-           RecorrerNodo->DirectorioTrabajadores.direccionTrabajador);
-           RecorrerNodo=RecorrerNodo->ptr_siguienteNodo;
-           }
-           
+    
+  if(cabezaLista==NULL){
+      printf("esta lista es una lista vacia, por favor primero ingrese valores en ella\r\n");
+     return;
+    }
+    nodo *RecorrerNodo=cabezaLista;
+  while(RecorrerNodo!=NULL){
+        printf("\n\nnombre: %s\n numero telefonico: %s\ndireccion: %s\r\n",
+                RecorrerNodo->DirectorioTrabajadores.nombreTrabajador,
+                RecorrerNodo->DirectorioTrabajadores.numeroTelefono,
+                RecorrerNodo->DirectorioTrabajadores.direccionTrabajador);
+        RecorrerNodo=RecorrerNodo->ptr_siguienteNodo;
+      }     
 }
 
 void EliminarElemento(unsigned char posicion){
@@ -156,20 +157,20 @@ void EliminarElemento(unsigned char posicion){
     nodo *buscarElemento=cabezaLista; 
     nodo *NodoAuxiliar=NULL;
 
-    for(MoverPosicion=1; MoverPosicion!=posicion && buscarElemento->ptr_siguienteNodo!=NULL;MoverPosicion++){
-          NodoAuxiliar=buscarElemento;
-          buscarElemento=buscarElemento->ptr_siguienteNodo;         
-        }
-     if(MoverPosicion!=posicion || buscarElemento==NULL){
-        printf("la posicion que desea buscar no se encuentra\\\
-                \r\nen la lista o la lista está vacia");
-               return;  
-        }
-      if(MoverPosicion==CABEZA) cabezaLista=buscarElemento->ptr_siguienteNodo; 
-         else NodoAuxiliar->ptr_siguienteNodo=buscarElemento->ptr_siguienteNodo; 
+  for(MoverPosicion=1; MoverPosicion!=posicion && buscarElemento->ptr_siguienteNodo!=NULL;MoverPosicion++){
+      NodoAuxiliar=buscarElemento;
+      buscarElemento=buscarElemento->ptr_siguienteNodo;         
+    }
+  if(MoverPosicion!=posicion || buscarElemento==NULL){
+      printf("la posicion que desea buscar no se encuentra\\\
+              \r\nen la lista o la lista está vacia");
+      return;  
+    }
+  if(MoverPosicion==CABEZA) cabezaLista=buscarElemento->ptr_siguienteNodo; 
+    else NodoAuxiliar->ptr_siguienteNodo=buscarElemento->ptr_siguienteNodo; 
             
-     free(buscarElemento);
-      CantidadTrabajadores--; 
+  free(buscarElemento);
+    CantidadTrabajadores--; 
 }
 
 void ImprimirOpciones(){
@@ -183,26 +184,52 @@ void ImprimirOpciones(){
 
 
 unsigned char  ElementoEliminar(){
-  unsigned char numero=0;
-   printf("ingrese el numero del elemento que desea eliminar");
-   scanf("%hhd",&numero);
+    unsigned char numero=0;
+    printf("ingrese el numero del elemento que desea eliminar");
+    scanf("%hhd",&numero);
    return(numero); 
 }
+
+
 void GuardarListaEnArchivo(){
-  FILE *ptr_Archivo=fopen("DatosTrabajadores-txt","w");
-  if(ptr_Archivo==NULL){
-    printf("error al intentar abrir el archivo...\r\n");
-    return; 
-  } nodo *RecorrerLista=cabezaLista;
+      FILE *ptr_Archivo=fopen("DatosTrabajadores-txt","a+");
+    if(ptr_Archivo==NULL){
+      printf("error al intentar abrir el archivo...\r\n");
+      return; 
+      }
+    nodo *RecorrerLista=cabezaLista;
     fprintf(ptr_Archivo,"NOMBRE\tTELEFONO\tDIRECCION\r\n");
-     while(RecorrerLista!=NULL){
-           fprintf(ptr_Archivo,"%s\t%s\t%s\r\n",
-           RecorrerLista->DirectorioTrabajadores.nombreTrabajador,
-           RecorrerLista->DirectorioTrabajadores.numeroTelefono,
-           RecorrerLista->DirectorioTrabajadores.direccionTrabajador);
-            RecorrerLista=RecorrerLista->ptr_siguienteNodo;
-           }
-fclose(ptr_Archivo);
-printf("elemento guardado\r\n");
-  
+    while(RecorrerLista!=NULL){
+          fprintf(ptr_Archivo,"%s\t%s\t%s\r\n",
+                  RecorrerLista->DirectorioTrabajadores.nombreTrabajador,
+                  RecorrerLista->DirectorioTrabajadores.numeroTelefono,
+                  RecorrerLista->DirectorioTrabajadores.direccionTrabajador);
+          RecorrerLista=RecorrerLista->ptr_siguienteNodo;
+        }
+
+ fclose(ptr_Archivo);   
+ BorrarListaEnArchivo(ptr_Archivo);  
 }
+
+
+void BorrarListaEnArchivo(FILE *ptr_archivo){
+    unsigned char guardar_borrar=0; 
+    printf("desea eliminar todos los datos del archivo??\r\n"); 
+  do{
+      printf("para borrar ingrese 'y' para continuar ingrese 'n'\r\n"); 
+      getchar(); 
+      scanf("%c",&guardar_borrar); 
+    if(guardar_borrar=='y'){
+      ptr_archivo=fopen("DatosTrabajadores-txt","w");
+      fclose(ptr_archivo); 
+      printf("elementos eliminados correctamente"); 
+      return;
+      }
+    if(guardar_borrar=='n'){
+      printf("elemento guardado\r\n");
+      return; 
+      }
+
+    }while(TRUE); 
+}
+
