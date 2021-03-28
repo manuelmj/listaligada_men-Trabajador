@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 #define TRUE 1
-#define BANDERA 1
 #define CABEZA 1 
 
 /*tipos de datos astractos*/
@@ -16,7 +15,7 @@ typedef struct NODO{
    DirectorioTrabajador DirectorioTrabajadores; 
    struct NODO* ptr_siguienteNodo;
 }nodo; 
-/**/
+/*VARIABLES GLOBALES*/
 nodo *colaLista=NULL;
 nodo *cabezaLista=NULL;
 unsigned char CantidadTrabajadores=0;  
@@ -31,7 +30,7 @@ void ImprimirLista();
 void ImprimirOpciones();
 void EliminarElemento(unsigned char posicion);
 unsigned char ElementoEliminar(); 
-
+void GuardarListaEnArchivo();
 /*INCIO DE LA FUNCION PRINCIPAL*/
 int main(void){
      
@@ -55,6 +54,7 @@ int main(void){
 
             case EscribirDatos:
                             InsertarEnLista(); 
+                            GuardarListaEnArchivo();
                             break;
             case VerLista: 
                             printf("actualmente se encuentran %d trabajadores.\r\n",CantidadTrabajadores); 
@@ -187,4 +187,22 @@ unsigned char  ElementoEliminar(){
    printf("ingrese el numero del elemento que desea eliminar");
    scanf("%hhd",&numero);
    return(numero); 
+}
+void GuardarListaEnArchivo(){
+  FILE *ptr_Archivo=fopen("DatosTrabajadores-txt","w");
+  if(ptr_Archivo==NULL){
+    printf("error al intentar abrir el archivo...\r\n");
+    return; 
+  } nodo *RecorrerLista=cabezaLista;
+    fprintf(ptr_Archivo,"NOMBRE\tTELEFONO\tDIRECCION\r\n");
+     while(RecorrerLista!=NULL){
+           fprintf(ptr_Archivo,"%s\t%s\t%s\r\n",
+           RecorrerLista->DirectorioTrabajadores.nombreTrabajador,
+           RecorrerLista->DirectorioTrabajadores.numeroTelefono,
+           RecorrerLista->DirectorioTrabajadores.direccionTrabajador);
+            RecorrerLista=RecorrerLista->ptr_siguienteNodo;
+           }
+fclose(ptr_Archivo);
+printf("elemento guardado\r\n");
+  
 }
