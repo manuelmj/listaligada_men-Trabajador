@@ -24,6 +24,7 @@ enum {EscribirDatos=1,VerLista,EliminarNodo,BorrarLista,VerArchivo,EliminarConte
 /*PROTOTIPO DE FUNCIONES*/
 void ImprimirOpciones();
 void limpiarPantalla();
+void ImprimirFechaHora();
 /*FUNCIONES PARA EL MANEJO DE LAS LISTAS LIGADAS*/
 nodo *CrearNodo();
 void InsertarEnLista();
@@ -55,7 +56,8 @@ int main(void){
         printf("los datos almacenados fueron:\r\n");
         VaciarLista(); 
         limpiarPantalla();
-        break;   
+        ImprimirFechaHora();
+        exit(EXIT_SUCCESS);    
        } 
 
     switch (MenuOpcion){
@@ -231,7 +233,7 @@ void GuardarListaEnArchivo(){
                 
     if(ptr_Archivo==NULL){
       printf("error al intentar abrir el archivo...\r\n");
-      return; 
+      exit(EXIT_FAILURE); 
       }
     nodo *RecorrerLista=cabezaLista;
     fprintf(ptr_Archivo,"NOMBRE\tTELEFONO\tDIRECCION\r\n");
@@ -252,13 +254,13 @@ void BorrarListaEnArchivo(){
     printf("desea eliminar todos los datos del archivo??\r\n"); 
   do{
       printf("para borrar ingrese 'y' para continuar ingrese 'n'\r\n"); 
-      getchar(); 
+      getchar(); //macro getc(stdin);
       scanf("%c",&guardar_borrar); 
     if(guardar_borrar=='y'){
       FILE *ptr_archivo=fopen("DatosTrabajadores-txt","w");
        if(ptr_archivo==NULL){
          printf("fallo al abrir el archivo\r\n");
-         return; 
+         exit(EXIT_FAILURE); 
           }
         fclose(ptr_archivo); 
         printf("elementos eliminados correctamente"); 
@@ -275,7 +277,7 @@ void ImprimirContenidoArchivo(){
     FILE *ptr_Archivo=fopen("DatosTrabajadores-txt","r");
   if(ptr_Archivo==NULL){
       printf("error al intentar abrir el archivo...\r\n");
-      return; 
+      exit(EXIT_FAILURE); 
       }
       DirectorioTrabajador DirectorioAuxiliarImprision;   
       while(!feof(ptr_Archivo)){
@@ -292,4 +294,7 @@ void ImprimirContenidoArchivo(){
 void limpiarPantalla(){
   unsigned char i=0; 
   for(i=0;i<40;i++)printf("\r\n");
+}
+void ImprimirFechaHora(){
+printf("el programa ejecutado en %s a las %s ha terminado\r\n",__DATE__,__TIME__);
 }
